@@ -1,0 +1,5 @@
+applications:
+- name: speedwordsearch
+  memory: 128M
+  routes:
+  - route: speedwordsearch.mybluemix.net

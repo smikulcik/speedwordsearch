@@ -1,0 +1,29 @@
+{
+  "name": "speedwordsearch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/server",
+    "lint": "standard",
+    "fix": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smikulcik/speedwordsearch.git"
+  },
+  "author": "Simon Mikulcik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smikulcik/speedwordsearch/issues"
+  },
+  "homepage": "https://github.com/smikulcik/speedwordsearch#readme",
+  "dependencies": {
+    "@sbj42/word-search-generator": "^0.1.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
+  }
+}
