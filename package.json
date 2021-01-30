@@ -21,7 +21,8 @@
   "homepage": "https://github.com/smikulcik/speedwordsearch#readme",
   "dependencies": {
     "@sbj42/word-search-generator": "^0.1.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nunjucks": "^3.2.2"
   },
   "devDependencies": {
     "standard": "^16.0.3"

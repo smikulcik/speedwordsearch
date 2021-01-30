@@ -3,6 +3,9 @@ const { generateWordsearch } = require('./wordsearch')
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 function generateID () {
+  if (process.env.DEMO === 'true') {
+    return 'rjzacx'
+  }
   const idLength = 6
   let out = ''
   for (let i = 0; i < idLength; i++) {
