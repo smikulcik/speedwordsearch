@@ -73,7 +73,7 @@ export function initializeGame (gameID) {
       this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor('#FFFFFC')
       this.usernameTxt = this.add.text(50, 50, '', { font: '24px Courier', fill: '#000000' })
       this.opponentTxt = this.add.text(this.cameras.main.width - 150, 50, '', { font: '24px Courier', fill: '#000000' })
-      this.header = this.add.text(this.cameras.main.centerX - 280, 60, '', { font: '24px Courier', fill: '#000000' })
+      this.header = this.add.text(this.cameras.main.centerX - 280, 40, '', { font: '24px Courier', fill: '#000000' })
       this.wordsearch = this.add.text(this.cameras.main.centerX - 280, 100, '', { font: '48px Courier', fill: '#000000' })
       this.wordBankTxt = this.add.text(this.cameras.main.centerX - 225, 50, '', { font: '24px Courier', fill: '#000000', align: 'center', wordWrap: { width: 450, useAdvancedWrap: true } })
 
@@ -81,7 +81,7 @@ export function initializeGame (gameID) {
       this.selection = this.add.graphics()
       this.foundWords = this.add.graphics()
 
-      this.startButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Start!', { font: '24px Courier', fill: '#000000' })
+      this.startButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Start!', { font: '24px Courier', fill: '#008000' })
         .setInteractive()
         .on('pointerup', () => {
           $.ajax({
@@ -98,9 +98,9 @@ export function initializeGame (gameID) {
         }).on('pointerover', () => {
           scene.startButton.setColor('#FF0000')
         }).on('pointerout', () => {
-          scene.startButton.setColor('#000000')
+          scene.startButton.setColor('#008000')
         })
-      this.joinButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Join Game!', { font: '24px Courier', fill: '#000' })
+      this.joinButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Join Game!', { font: '24px Courier', fill: '#008000' })
         .setInteractive()
         .on('pointerup', () => {
           const searchParams = new URLSearchParams(window.location.search)
@@ -129,9 +129,9 @@ export function initializeGame (gameID) {
         }).on('pointerover', () => {
           scene.joinButton.setColor('#FF0000')
         }).on('pointerout', () => {
-          scene.joinButton.setColor('#000000')
+          scene.joinButton.setColor('#008000')
         })
-      this.refreshButton = this.add.text(this.cameras.main.centerX - 40, 10, 'Refresh', { font: '18px Courier', fill: '#000' })
+      this.refreshButton = this.add.text(this.cameras.main.centerX - 40, 10, 'Refresh', { font: '18px Courier', fill: '#008000' })
         .setInteractive()
         .on('pointerup', () => {
           scene.updateScene()
@@ -139,7 +139,7 @@ export function initializeGame (gameID) {
         }).on('pointerover', () => {
           this.refreshButton.setColor('#FF0000')
         }).on('pointerout', () => {
-          this.refreshButton.setColor('#000000')
+          this.refreshButton.setColor('#008000')
         })
 
       // mouse movements
@@ -253,7 +253,7 @@ export function initializeGame (gameID) {
       this.cameras.resize(width, height)
 
       this.opponentTxt.setPosition(this.cameras.main.width - 150, 50)
-      this.header.setPosition(this.cameras.main.centerX - 280, 60)
+      this.header.setPosition(this.cameras.main.centerX - 280, 40)
       this.wordsearch.setPosition(this.cameras.main.centerX - 280, 100)
       this.startButton.setPosition(this.cameras.main.centerX - 50, 620)
       this.joinButton.setPosition(this.cameras.main.centerX - 80, 620)
@@ -370,7 +370,7 @@ export function initializeGame (gameID) {
               this.startButton.visible = false
               this.joinButton.visible = false
 
-              scene.header.setText(`Welcome ${scene.username}. Waiting for an opponent...`)
+              scene.header.setText(`Welcome ${scene.username}. Waiting for an opponent...\nYou can invite a friend with Code above`)
             }
           } else {
             if (scene.username === undefined) {
@@ -416,9 +416,9 @@ export function initializeGame (gameID) {
           this.joinButton.visible = false
 
           if (numP1 > numP2) {
-            scene.header.setText('Game is over! ' + data.players[0] + 'won!')
+            scene.header.setText('Game is over! ' + data.players[0] + ' won!')
           } else if (numP1 < numP2) {
-            scene.header.setText('Game is over! ' + data.players[1] + 'won!')
+            scene.header.setText('Game is over! ' + data.players[1] + ' won!')
           } else {
             scene.header.setText('Game is over! Tie!')
           }

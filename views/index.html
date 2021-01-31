@@ -36,6 +36,11 @@
                 font-size: 24;
                 width: 100%;
             }
+            #new_game {
+                padding-top:30px;
+                padding-bottom: 30px;
+                color: #008000;
+            }
             #new_game:hover {
                 color: red;
                 cursor: pointer;
@@ -46,15 +51,20 @@
                 top: 0;
                 right: 0;
                 z-index: 1;
+                font-size:24px;
+            }
+            input[type="text"]
+            {
+                font-size:24px;
             }
         </style>
     </head>
     <body>
-        <div id=join href='/'>Join: <input value='{{id}}'/><button id=joinBtn>Go!</button></div>
+        <div id=join href='/'>Join Existing Game: <input type="text" value='{{id}}' placeholder="Invite Code"/><button id=joinBtn>Go!</button></div>
         <div id=container>
             <div id=content>
                 <div id=title><I>Speed</I> Wordsearch</div>
-                <div id=new_game>New Game</div>
+                <div id=new_game>Begin New Game</div>
                 <div>by Simon Mikulcik</div>
                 <div><a href="https://github.com/smikulcik">https://github.com/smikulcik</a></div>
                 <div>Global Game Jam January 2021</div>
