@@ -84,11 +84,22 @@ export function initializeGame (gameID) {
               alert(`Failure: ${data.message}`)
             }
           })
+        }).on('pointerover', () => {
+          scene.startButton.setColor('#FF0000')
+        }).on('pointerout', () => {
+          scene.startButton.setColor('#000000')
         })
       this.joinButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Join Game!', { font: '24px Courier', fill: '#000' })
         .setInteractive()
         .on('pointerup', () => {
-          scene.username = window.prompt('Please enter your name')
+          const searchParams = new URLSearchParams(window.location.search)
+          scene.username = searchParams.get('username')
+          if (!scene.username) {
+            scene.username = window.prompt('Please enter your name')
+            searchParams.set('username', scene.username)
+            const newRelativePathQuery = window.location.pathname + '?' + searchParams.toString()
+            history.pushState(null, '', newRelativePathQuery)
+          }
 
           // register
           $.ajax({
@@ -104,29 +115,21 @@ export function initializeGame (gameID) {
               alert(`Failure: ${data.message}`)
             }
           })
+        }).on('pointerover', () => {
+          scene.joinButton.setColor('#FF0000')
+        }).on('pointerout', () => {
+          scene.joinButton.setColor('#000000')
         })
-
-      // subscribe to game's feed
-      const exampleSocket = new WebSocket('ws://' + window.location.host + '/game/wss')
-      exampleSocket.onopen = function () {
-        exampleSocket.send(JSON.stringify({ type: 'subscribe', game_id: gameID }))
-      }
-      exampleSocket.onmessage = function (message) {
-        const data = JSON.parse(message.data)
-        switch (data.type) {
-          case 'register':
-            scene.updateScene()
-            break
-          case 'start_game':
-            scene.updateScene()
-            break
-          case 'found_word':
-            scene.updateScene()
-            break
-          default:
-            console.log(message)
-        }
-      }
+      this.refreshButton = this.add.text(this.cameras.main.centerX - 40, 10, 'Refresh', { font: '18px Courier', fill: '#000' })
+        .setInteractive()
+        .on('pointerup', () => {
+          scene.updateScene()
+          scene.reconnectSocket()
+        }).on('pointerover', () => {
+          this.refreshButton.setColor('#FF0000')
+        }).on('pointerout', () => {
+          this.refreshButton.setColor('#000000')
+        })
 
       // mouse movements
       this.input.on('pointermove', (pointer) => {
@@ -227,6 +230,7 @@ export function initializeGame (gameID) {
       })
 
       // initial update
+      scene.reconnectSocket() // subscribe to game's feed
       this.resize(this.cameras)
       scene.updateScene()
     }
@@ -248,6 +252,33 @@ export function initializeGame (gameID) {
       drawFoundWords(this, this.foundWords, this.found_words, this.players)
     }
 
+    reconnectSocket () {
+      const scene = this
+      if (this.socket !== undefined) {
+        this.socket.close(1000, 'Reconnecting')
+      }
+      this.socket = new WebSocket('ws://' + window.location.host + '/game/wss')
+      this.socket.onopen = function () {
+        scene.socket.send(JSON.stringify({ type: 'subscribe', game_id: gameID }))
+      }
+      this.socket.onmessage = function (message) {
+        const data = JSON.parse(message.data)
+        switch (data.type) {
+          case 'register':
+            scene.updateScene()
+            break
+          case 'start_game':
+            scene.updateScene()
+            break
+          case 'found_word':
+            scene.updateScene()
+            break
+          default:
+            console.log(message)
+        }
+      }
+    }
+
     updateScene () {
       const scene = this
 
@@ -258,6 +289,19 @@ export function initializeGame (gameID) {
         scene.status = data.status
         scene.players = data.players
         scene.found_words = data.found_words
+
+        // handle query username
+
+        const searchParams = new URLSearchParams(window.location.search)
+        const queryUsername = searchParams.get('username')
+        if (queryUsername !== undefined && (data.players[0] === queryUsername || data.players[1] === queryUsername)) {
+          scene.username = queryUsername
+        } else {
+        // unset query parameter
+          searchParams.delete('username')
+          const newRelativePathQuery = window.location.pathname + '?' + searchParams.toString()
+          history.pushState(null, '', newRelativePathQuery)
+        }
 
         // count score
         let numP1 = 0
