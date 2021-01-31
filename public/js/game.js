@@ -140,7 +140,6 @@ export function initializeGame (gameID) {
           let angle = (Math.atan2(this.pointerCoord.y - this.startSelect.y, this.pointerCoord.x - this.startSelect.x) * 180 / Math.PI)
           if (angle < 0) { angle += 360 }
           const distance = Math.sqrt(Math.pow(this.pointerCoord.x - this.startSelect.x, 2) + Math.pow(this.pointerCoord.y - this.startSelect.y, 2))
-          console.log(`angle=${angle} distance=${distance}`)
           if (angle < 23) { // horizontal
             this.pointerCoord.y = this.startSelect.y
           } else if (angle < 68) { // diagonal
@@ -197,32 +196,31 @@ export function initializeGame (gameID) {
         const gridX = Math.floor((this.pointerCoord.x - (this.cameras.main.centerX - 280 - 10)) / 57)
         const gridY = Math.floor((this.pointerCoord.y - 100) / 51)
         if (this.startSelect !== undefined && gridX >= 0 && gridX < 10 && gridY >= 0 && gridY < 10) {
-          console.log(this.startSelect.gridX, this.startSelect.gridY, gridX, gridY)
-        }
-
-        // do push selection
-        $.ajax({
-          url: '/v1/game/' + gameID + '/found_words',
-          type: 'POST',
-          data: JSON.stringify({
-            player_username: scene.username,
-            coordinates: {
-              start: {
-                x: this.startSelect.gridX,
-                y: this.startSelect.gridY
-              },
-              end: {
-                x: gridX,
-                y: gridY
+          // do push selection
+          $.ajax({
+            url: '/v1/game/' + gameID + '/found_words',
+            type: 'POST',
+            data: JSON.stringify({
+              player_username: scene.username,
+              coordinates: {
+                start: {
+                  x: this.startSelect.gridX,
+                  y: this.startSelect.gridY
+                },
+                end: {
+                  x: gridX,
+                  y: gridY
+                }
               }
-            }
-          }),
-          contentType: 'application/json; charseet=utf-8',
-          dataType: 'json',
-          success: () => {},
-          error: () => {}
-        })
-
+            }),
+            contentType: 'application/json; charseet=utf-8',
+            dataType: 'json',
+            success: () => {
+              scene.updateScene()
+            },
+            error: () => {}
+          })
+        }
         // reset previous selection
         this.selection.visible = false
         this.startSelect = undefined
