@@ -51,6 +51,17 @@ function drawFoundWords (scene, foundWordsGraphics, foundWords, players) {
   })
 }
 
+function drawWordSearch (scene, wordsearch) {
+  let wordsearchTxt = ''
+  for (let row = 0; row < wordsearch.board.length; row++) {
+    for (let col = 0; col < wordsearch.board[row].length; col++) {
+      wordsearchTxt += wordsearch.board[row][col] + ' '
+    }
+    wordsearchTxt += '\n'
+  }
+  scene.wordsearch.setText(wordsearchTxt)
+}
+
 export function initializeGame (gameID) {
   class Game extends Phaser.Scene {
     create () {
@@ -386,15 +397,7 @@ export function initializeGame (gameID) {
           } else {
             scene.header.setText(`${data.players[0]} vs ${data.players[1]}`)
           }
-
-          let wordsearchTxt = ''
-          for (let row = 0; row < data.wordsearch.board.length; row++) {
-            for (let col = 0; col < data.wordsearch.board[row].length; col++) {
-              wordsearchTxt += data.wordsearch.board[row][col] + ' '
-            }
-            wordsearchTxt += '\n'
-          }
-          scene.wordsearch.setText(wordsearchTxt)
+          drawWordSearch(scene, data.wordsearch)
           drawFoundWords(scene, scene.foundWords, data.found_words, data.players)
 
           // add wordbank
@@ -419,7 +422,7 @@ export function initializeGame (gameID) {
             scene.header.setText('Game is over! Tie!')
           }
 
-          scene.header.setText('Game is over!')
+          drawWordSearch(scene, data.wordsearch)
           drawFoundWords(scene, scene.foundWords, data.found_words, data.players)
         }
       })
