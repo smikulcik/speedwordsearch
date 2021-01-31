@@ -5,9 +5,48 @@
             import {initializeHome} from '/js/home.js'
             initializeHome()
         </script>
+        <style>
+            body {
+                font-family:'Courier New', Courier, monospace;
+                text-align: center;
+                text-decoration: none;
+                font-weight: bold;
+                display: block;
+            }
+            #container{
+                height: 100%;
+                position: relative
+            }
+            #content{
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%)
+            }
+            #content>div{
+                margin-bottom: 10px;
+            }
+            #new_game, #title {
+                font-size: 24;
+                width: 100%;
+            }
+            #new_game:hover {
+                color: red;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
-        <h1>Speed Wordsearch</h1>
-        <button id=new_game>New Game</button>
+        <div id=container>
+            <div id=content>
+                <div id=title><I>Speed</I> Wordsearch</div>
+                <div id=new_game>New Game</div>
+                <div>by Simon Mikulcik</div>
+                <div><a href="https://github.com/smikulcik">https://github.com/smikulcik</div>
+                <div>Global Game Jam January 2021</div>
+            </div>
+        </div>
     </body>
 </html>
