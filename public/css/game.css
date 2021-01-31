@@ -1,4 +1,29 @@
 body {
     margin: 0;
     padding: 0;
+
+    font-family:'Courier New', Courier, monospace;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#title {
+    padding: 10px;
+    font-size: 24px;
+    color: black;
+    text-decoration: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#title:hover {
+    color: red;
+    cursor: pointer;
+}
+#invite {
+    position: fixed;
+    padding: 10px;
+    top: 0;
+    right: 0;
 }

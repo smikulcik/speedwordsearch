@@ -258,6 +258,7 @@ export function initializeGame (gameID) {
       this.startButton.setPosition(this.cameras.main.centerX - 50, 620)
       this.joinButton.setPosition(this.cameras.main.centerX - 80, 620)
       this.wordBankTxt.setPosition(this.cameras.main.centerX - 225, 620)
+      this.refreshButton.setPosition(this.cameras.main.centerX - 40, 10)
       drawGrid(this.grid, this.cameras.main.centerX - 280 - 10, 100, 570, 510, 10, 10, { width: 2, fill: 0xFF7F11 })
 
       drawFoundWords(this, this.foundWords, this.found_words, this.players)

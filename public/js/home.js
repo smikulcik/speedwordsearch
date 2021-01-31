@@ -9,4 +9,15 @@ export function initializeHome () {
       window.location.href = '/' + data.id
     })
   })
+  $('#joinBtn').on('click', (event) => {
+    event.preventDefault()
+    const gameID = $('#join>input').val()
+
+    $.get('/v1/game/' + gameID).then(() => {
+      // if exists, redirect
+      window.location = '/' + gameID
+    }).catch(() => {
+      alert('Game with ID=' + gameID + ' does not exist')
+    })
+  })
 }
