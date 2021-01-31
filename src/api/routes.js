@@ -1,6 +1,8 @@
 
+const expressWs = require('express-ws')
 const { getGameData } = require('./datastore')
 const { newGame, registerPlayer, startGame, findWord } = require('./game')
+const { receiveWSMessage } = require('./websockets')
 
 /**
  *
@@ -82,6 +84,15 @@ function addRoutes (app) {
       }))
       console.log('POST /v1/game/' + req.params.id + '/found_words => 400')
     }
+  })
+
+  // WS endpoints
+  expressWs(app)
+  app.ws('/game/wss', function (ws, req) {
+    ws.on('message', (message) => {
+      receiveWSMessage(ws, JSON.parse(message))
+    })
+    ws.send(JSON.stringify({ type: 'welcome' }))
   })
 }
 

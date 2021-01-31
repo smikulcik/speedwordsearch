@@ -1,5 +1,6 @@
 const datastore = require('./datastore')
 const { generateWordsearch } = require('./wordsearch')
+const { broadcast } = require('./websockets')
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 function generateID () {
@@ -35,6 +36,11 @@ function registerPlayer (registerReq) {
     throw new Error('Game already has 2 players')
   }
   game.players.push(registerReq.player_username)
+
+  broadcast(game.id, {
+    type: 'register',
+    player: registerReq.player_username
+  })
 }
 
 function startGame (gameID) {
@@ -49,6 +55,11 @@ function startGame (gameID) {
   game.status = 'started'
   game.started_at = (new Date()).toISOString()
   game.found_words = []
+
+  broadcast(game.id, {
+    type: 'start_game',
+    started_at: game.started_at
+  })
 }
 
 // TODO: Implement locking
@@ -85,7 +96,7 @@ function findWord (gameID, player, coords) {
   }
 
   // claim word
-  game.found_words.push({
+  const foundWordObj = {
     value: foundWord,
     player: player,
     coordinates: {
@@ -99,13 +110,19 @@ function findWord (gameID, player, coords) {
       }
     },
     found_at: (new Date()).toISOString()
-  })
+  }
+  game.found_words.push(foundWordObj)
 
   // check for end conditions
   if (game.found_words.length === game.wordsearch.words.length) {
     game.status = 'ended'
     game.ended_at = (new Date()).toISOString()
   }
+
+  broadcast(game.id, {
+    type: 'found_word',
+    found_word: foundWordObj
+  })
 }
 
 module.exports = {

@@ -22,7 +22,9 @@
   "dependencies": {
     "@sbj42/word-search-generator": "^0.1.2",
     "express": "^4.17.1",
-    "nunjucks": "^3.2.2"
+    "express-ws": "^4.0.0",
+    "nunjucks": "^3.2.2",
+    "ws": "^7.4.2"
   },
   "devDependencies": {
     "standard": "^16.0.3"
