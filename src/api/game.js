@@ -68,10 +68,36 @@ function findWord (gameID, player, coords) {
 
   // find word in game
   let foundWord = ''
-  for (let x = coords.start.x; x <= coords.end.x; x++) {
-    for (let y = coords.start.y; y <= coords.end.y; y++) {
-      foundWord += game.wordsearch.board[x][y]
+  if (coords.start.x === coords.end.x) { // vertical
+    let y = coords.start.y
+    while (true) {
+      foundWord += game.wordsearch.board[y][coords.start.x]
+      if (y === coords.end.y) break
+      if (y < coords.end.y) y++
+      else y--
     }
+  } else if (coords.start.y === coords.end.y) { // horizontal
+    let x = coords.start.x
+    while (true) {
+      foundWord += game.wordsearch.board[coords.start.y][x]
+      if (x === coords.end.x) break
+      if (x < coords.end.x) x++
+      else x--
+    }
+  } else if (Math.abs(coords.start.y - coords.end.y) === Math.abs(coords.start.x - coords.end.x)) {
+    // if diagonal
+    let x = coords.start.x
+    let y = coords.start.y
+    while (true) {
+      foundWord += game.wordsearch.board[y][x]
+      if (x === coords.end.x && y === coords.end.y) break
+      if (x < coords.end.x) x++
+      else x--
+      if (y < coords.end.y) y++
+      else y--
+    }
+  } else {
+    throw new Error('Invalid Coordinates: Only vertical, horizontal, and diagonal: ' + JSON.stringify(coords))
   }
   // verify it's a match
   let isValid = false

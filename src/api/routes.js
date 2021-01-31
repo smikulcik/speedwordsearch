@@ -78,6 +78,7 @@ function addRoutes (app) {
       res.status(201).send(JSON.stringify(game))
       console.log('POST /v1/game/' + req.params.id + '/found_words => 201')
     } catch (e) {
+      console.log(e)
       res.status(400).send(JSON.stringify({
         code: 'bad_request',
         message: e.message

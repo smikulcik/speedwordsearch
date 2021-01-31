@@ -5,7 +5,11 @@ function broadcast (gameID, message) {
   console.log('Broadcast: ' + gameID, JSON.stringify(message))
   if (subscriptions[gameID] !== undefined) {
     subscriptions[gameID].forEach(client => {
-      client.send(JSON.stringify(message))
+      try {
+        client.send(JSON.stringify(message))
+      } catch (e) {
+        console.log(e)
+      }
     })
   }
 }
