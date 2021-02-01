@@ -71,17 +71,17 @@ export function initializeGame (gameID) {
       this.scale.on('resize', this.resize, this)
 
       this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor('#FFFFFC')
-      this.usernameTxt = this.add.text(50, 50, '', { font: '24px Courier', fill: '#000000' })
-      this.opponentTxt = this.add.text(this.cameras.main.width - 150, 50, '', { font: '24px Courier', fill: '#000000' })
-      this.header = this.add.text(this.cameras.main.centerX - 280, 40, '', { font: '24px Courier', fill: '#000000' })
-      this.wordsearch = this.add.text(this.cameras.main.centerX - 280, 100, '', { font: '48px Courier', fill: '#000000' })
-      this.wordBankTxt = this.add.text(this.cameras.main.centerX - 225, 50, '', { font: '24px Courier', fill: '#000000', align: 'center', wordWrap: { width: 450, useAdvancedWrap: true } })
+      this.usernameTxt = this.add.text(50, 50, '', { font: '24px Courier New', fill: '#000000' })
+      this.opponentTxt = this.add.text(this.cameras.main.width - 150, 50, '', { font: '24px Courier New', fill: '#000000' })
+      this.header = this.add.text(this.cameras.main.centerX - 280, 40, '', { font: '24px Courier New', fill: '#000000' })
+      this.wordsearch = this.add.text(this.cameras.main.centerX - 280, 100, '', { font: '48px Courier New', fill: '#000000', stroke: '#fff', strokeThickness: 5 })
+      this.wordBankTxt = this.add.text(this.cameras.main.centerX - 225, 50, '', { font: '24px Courier New', fill: '#000000', align: 'center', wordWrap: { width: 450, useAdvancedWrap: true } })
 
       this.grid = this.add.graphics()
       this.selection = this.add.graphics()
       this.foundWords = this.add.graphics()
 
-      this.startButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Start!', { font: '24px Courier', fill: '#008000' })
+      this.startButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Start!', { font: '24px Courier New', fill: '#008000' })
         .setInteractive()
         .on('pointerup', () => {
           $.ajax({
@@ -100,7 +100,7 @@ export function initializeGame (gameID) {
         }).on('pointerout', () => {
           scene.startButton.setColor('#008000')
         })
-      this.joinButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Join Game!', { font: '24px Courier', fill: '#008000' })
+      this.joinButton = this.add.text(this.cameras.main.centerX - 40, 620, 'Join Game!', { font: '24px Courier New', fill: '#008000' })
         .setInteractive()
         .on('pointerup', () => {
           const searchParams = new URLSearchParams(window.location.search)
@@ -131,7 +131,7 @@ export function initializeGame (gameID) {
         }).on('pointerout', () => {
           scene.joinButton.setColor('#008000')
         })
-      this.refreshButton = this.add.text(this.cameras.main.centerX - 40, 10, 'Refresh', { font: '18px Courier', fill: '#008000' })
+      this.refreshButton = this.add.text(this.cameras.main.centerX - 40, 10, 'Refresh', { font: '18px Courier New', fill: '#008000' })
         .setInteractive()
         .on('pointerup', () => {
           scene.updateScene()
